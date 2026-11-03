@@ -6,10 +6,25 @@ pluginManagement {
             url = 'https://maven.minecraftforge.net/'
         }
     }
+    plugins {
+        id 'com.google.protobuf' version '0.10.0'
+    }
 }
 
 plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.7.0'
 }
 
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            from(files('../gradle/libs.versions.toml'))
+        }
+    }
+}
+
 rootProject.name = 'keep-together-mod'
+
+include 'protocol', 'tunnel'
+project(':protocol').projectDir = file('../protocol')
+project(':tunnel').projectDir = file('../tunnel')

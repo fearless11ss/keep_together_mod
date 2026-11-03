@@ -9,11 +9,24 @@ plugins {
 version = mod_version
 group = mod_group_id
 
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    group = mod_group_id
+    version = internal_library_version
+}
+
 base {
     archivesName = mod_id
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+jarJar.enable()
 
 minecraft {
     mappings channel: mapping_channel, version: mapping_version
@@ -34,6 +47,18 @@ minecraft {
 
         client {}
 
+        ownerClient {
+            client true
+            workingDirectory project.file('run-owner')
+            args '--username', 'Owner'
+        }
+
+        guestClient {
+            client true
+            workingDirectory project.file('run-guest')
+            args '--username', 'Guest'
+        }
+
         server {
             args '--nogui'
         }
@@ -50,6 +75,24 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    implementation project(':tunnel')
+    jarJar(project(':tunnel')) {
+        jarJar.ranged(it, '[0.0.1,0.1)')
+        jarJar.pin(it, internal_library_version)
+    }
+    jarJar(project(':protocol')) {
+        jarJar.ranged(it, '[0.0.1,0.1)')
+        jarJar.pin(it, internal_library_version)
+    }
+
+    testImplementation platform(libs.junit.bom)
+    testImplementation libs.junit.jupiter
+    testImplementation libs.assertj.core
+    testRuntimeOnly libs.junit.platform.launcher
+}
+
+tasks.named('test', Test).configure {
+    useJUnitPlatform()
 }
 
 tasks.named('processResources', ProcessResources).configure {

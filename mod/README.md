@@ -12,6 +12,12 @@ It must not:
 - download or execute arbitrary code;
 - distribute Minecraft binaries or a launcher.
 
-The M0 build only proves that the Forge deployment unit compiles and packages.
-Minecraft screens, rendering hooks, networking Adapters, and product Modules
-start as explicit M1 technical spikes.
+The M1 world-tunnel spike publishes an IntegratedServer and connects it to the
+development Relay through the World Tunnel Module. Two isolated ForgeGradle
+runs are available as `runOwnerClient` and `runGuestClient`. This is a
+development path, not production authorization or transport security; follow
+[`docs/development/m1-world-tunnel.md`](../docs/development/m1-world-tunnel.md).
+
+The distributable `*-all.jar` embeds the Java 17 `tunnel` and `protocol`
+libraries through Forge Jar-in-Jar. Use that artifact for manual installation;
+the plain jar is an intermediate build output.

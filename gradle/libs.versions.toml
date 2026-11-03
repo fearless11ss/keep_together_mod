@@ -16,6 +16,9 @@ junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
 netty-bom = { module = "io.netty:netty-bom", version.ref = "netty" }
 netty-common = { module = "io.netty:netty-common" }
+netty-codec = { module = "io.netty:netty-codec" }
+netty-handler = { module = "io.netty:netty-handler" }
+netty-transport = { module = "io.netty:netty-transport" }
 protobuf-java = { module = "com.google.protobuf:protobuf-java", version.ref = "protobuf" }
 spring-modulith-bom = { module = "org.springframework.modulith:spring-modulith-bom", version.ref = "spring-modulith" }
 spring-modulith-core = { module = "org.springframework.modulith:spring-modulith-starter-core" }

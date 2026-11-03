@@ -4,8 +4,9 @@ Keep Together is an open-source social mod for Minecraft Java Edition. It is
 designed to provide independent accounts, friendships, encrypted chats, custom
 skins, and temporary friend-hosted worlds without a custom launcher.
 
-> **Status:** pre-alpha foundation. The buildable applications are placeholders;
-> accounts, chat, world connections, and cryptography are not implemented yet.
+> **Status:** pre-alpha technical spikes. A one-owner/one-guest development
+> world tunnel is implemented; accounts, chat, production authorization,
+> transport security, and cryptography are not implemented yet.
 > Do not use this project for sensitive communications.
 
 The first supported target is Minecraft Java Edition 1.20.1 with Forge and
@@ -51,6 +52,9 @@ required for the website.
 Local PostgreSQL, S3-compatible object storage, and captured email are defined
 in `infra/local/compose.yaml`. They are not required for the M0 placeholder
 applications; setup commands are in `docs/development/setup.md`.
+
+The first two-client world-tunnel test is documented in
+[`docs/development/m1-world-tunnel.md`](docs/development/m1-world-tunnel.md).
 
 ## Legal and launch status
 

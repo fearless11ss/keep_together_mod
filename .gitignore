@@ -14,6 +14,10 @@ out/
 *.class
 *.jar
 !**/gradle/wrapper/gradle-wrapper.jar
+mod/run/
+mod/run-data/
+mod/run-owner/
+mod/run-guest/
 
 # Node
 node_modules/
