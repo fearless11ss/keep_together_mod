@@ -1,0 +1,49 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.jks
+secrets/
+
+# Java and Gradle
+.gradle/
+build/
+out/
+*.class
+*.jar
+!**/gradle/wrapper/gradle-wrapper.jar
+
+# Node
+node_modules/
+dist/
+.vite/
+coverage/
+*.tsbuildinfo
+
+# IDEs
+.idea/
+*.iml
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.example.json
+
+# Local infrastructure and data
+.dev-data/
+data/
+logs/
+*.log
+
+# Test and tool output
+.testcontainers.properties
+junit-platform.properties
+fuzz-artifacts/
+sbom/
+**/bom.json
+**/bom.xml
+
+# Operating systems
+.DS_Store
+Thumbs.db
+Desktop.ini

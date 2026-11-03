@@ -1,0 +1,24 @@
+[versions]
+assertj = "3.27.7"
+bouncycastle = "1.86"
+junit = "5.14.4"
+netty = "4.2.20.Final"
+protobuf = "4.36.2"
+spring-modulith = "2.1.2"
+testcontainers = "2.0.5"
+tink = "1.24.0"
+
+[libraries]
+assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
+bouncycastle-mls = { module = "org.bouncycastle:bcmls-jdk18on", version.ref = "bouncycastle" }
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
+netty-bom = { module = "io.netty:netty-bom", version.ref = "netty" }
+netty-common = { module = "io.netty:netty-common" }
+protobuf-java = { module = "com.google.protobuf:protobuf-java", version.ref = "protobuf" }
+spring-modulith-bom = { module = "org.springframework.modulith:spring-modulith-bom", version.ref = "spring-modulith" }
+spring-modulith-core = { module = "org.springframework.modulith:spring-modulith-starter-core" }
+spring-modulith-test = { module = "org.springframework.modulith:spring-modulith-starter-test" }
+testcontainers-bom = { module = "org.testcontainers:testcontainers-bom", version.ref = "testcontainers" }
+tink = { module = "com.google.crypto.tink:tink", version.ref = "tink" }
