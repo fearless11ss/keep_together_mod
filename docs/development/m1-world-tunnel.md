@@ -25,17 +25,24 @@ inbound Internet connection. It is not a production networking feature.
 The Forge runs use separate `mod/run-owner` and `mod/run-guest` directories and
 different offline development usernames. This avoids client-state collisions.
 
-## 1. Start Relay
-
-In terminal 1, generate a temporary secret, print it once for terminal 2, then
-start a loopback-only Relay:
+For the current Windows checkout, first run this in every new terminal:
 
 ```powershell
-$secretBytes = [byte[]]::new(32)
-[Security.Cryptography.RandomNumberGenerator]::Fill($secretBytes)
-$env:KT_RELAY_TICKET_SECRET = [Convert]::ToBase64String($secretBytes)
-$env:KT_RELAY_TICKET_SECRET
-./gradlew.bat :relay:run --console=plain
+Set-Location 'C:\dev\keep-together'
+```
+
+Verify that `Test-Path .\gradlew.bat` returns `True` before continuing. The
+Desktop folder named `social mod` is not the repository root.
+
+## 1. Start Relay
+
+In terminal 1, generate a temporary secret, copy it for terminal 2, then start
+a loopback-only Relay. The helper supports Windows PowerShell 5.1 and newer:
+
+```powershell
+$env:KT_RELAY_TICKET_SECRET = & .\scripts\new-m1-relay-secret.ps1
+$env:KT_RELAY_TICKET_SECRET | Set-Clipboard
+.\gradlew.bat :relay:run --console=plain
 ```
 
 The expected address is `127.0.0.1:25570`. Leave the process running.
@@ -47,7 +54,7 @@ one short-lived pair:
 
 ```powershell
 $env:KT_RELAY_TICKET_SECRET = Read-Host 'Paste the Base64 secret from terminal 1'
-./gradlew.bat :relay:issueM1Tickets --console=plain
+.\gradlew.bat :relay:issueM1Tickets --console=plain
 ```
 
 Copy `KT_M1_OWNER_TICKET` and `KT_M1_GUEST_TICKET` into their respective client
@@ -63,7 +70,7 @@ $env:KT_M1_MODE = 'owner'
 $env:KT_M1_RELAY_HOST = '127.0.0.1'
 $env:KT_M1_RELAY_PORT = '25570'
 $env:KT_M1_TICKET = Read-Host 'Paste KT_M1_OWNER_TICKET'
-./gradlew.bat runOwnerClient --console=plain
+.\gradlew.bat runOwnerClient --console=plain
 ```
 
 Open any single-player world. The mod publishes the IntegratedServer locally
@@ -79,7 +86,7 @@ $env:KT_M1_MODE = 'guest'
 $env:KT_M1_RELAY_HOST = '127.0.0.1'
 $env:KT_M1_RELAY_PORT = '25570'
 $env:KT_M1_TICKET = Read-Host 'Paste KT_M1_GUEST_TICKET'
-./gradlew.bat runGuestClient --console=plain
+.\gradlew.bat runGuestClient --console=plain
 ```
 
 Find this guest log line and copy its actual port:
