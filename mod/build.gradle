@@ -48,12 +48,14 @@ minecraft {
         client {}
 
         ownerClient {
+            parent runs.client
             client true
             workingDirectory project.file('run-owner')
             args '--username', 'Owner'
         }
 
         guestClient {
+            parent runs.client
             client true
             workingDirectory project.file('run-guest')
             args '--username', 'Guest'
@@ -93,6 +95,24 @@ dependencies {
 
 tasks.named('test', Test).configure {
     useJUnitPlatform()
+}
+
+def verifyM1RunConfigurations = tasks.register('verifyM1RunConfigurations') {
+    group = 'verification'
+    description = 'Checks that the isolated M1 clients inherit an executable Minecraft entrypoint.'
+
+    doLast {
+        ['runOwnerClient', 'runGuestClient'].each { taskName ->
+            def runTask = tasks.named(taskName, JavaExec).get()
+            if (!runTask.mainClass.present) {
+                throw new GradleException("${taskName} has no Minecraft main class")
+            }
+        }
+    }
+}
+
+tasks.named('check').configure {
+    dependsOn verifyM1RunConfigurations
 }
 
 tasks.named('processResources', ProcessResources).configure {
