@@ -20,7 +20,7 @@ inbound Internet connection. It is not a production networking feature.
 
 - Windows PowerShell.
 - The repository checks have passed with `./scripts/check.ps1`.
-- Four terminals opened at the repository root.
+- Three terminals: one Relay, one owner client, and one guest client.
 
 The Forge runs use separate `mod/run-owner` and `mod/run-guest` directories and
 different offline development usernames. This avoids client-state collisions.
@@ -34,35 +34,23 @@ Set-Location 'C:\dev\keep-together'
 Verify that `Test-Path .\gradlew.bat` returns `True` before continuing. The
 Desktop folder named `social mod` is not the repository root.
 
-## 1. Start Relay
+## 1. Issue tickets and start Relay
 
-In terminal 1, generate a temporary secret, copy it for terminal 2, then start
-a loopback-only Relay. The helper supports Windows PowerShell 5.1 and newer:
-
-```powershell
-$env:KT_RELAY_TICKET_SECRET = & .\scripts\new-m1-relay-secret.ps1
-$env:KT_RELAY_TICKET_SECRET | Set-Clipboard
-.\gradlew.bat :relay:run --console=plain
-```
-
-The expected address is `127.0.0.1:25570`. Leave the process running.
-
-## 2. Issue a ticket pair
-
-In terminal 2, assign the printed secret without saving it to disk, then issue
-one short-lived pair:
+In terminal 1, run the local helper. It generates an in-memory secret, prints
+one owner/guest ticket pair with a 60-minute development lifetime, and starts a
+loopback-only Relay. It supports Windows PowerShell 5.1 and newer:
 
 ```powershell
-$env:KT_RELAY_TICKET_SECRET = Read-Host 'Paste the Base64 secret from terminal 1'
-.\gradlew.bat :relay:issueM1Tickets --console=plain
+.\scripts\start-m1-local-relay.ps1
 ```
 
-Copy `KT_M1_OWNER_TICKET` and `KT_M1_GUEST_TICKET` into their respective client
-terminals. The session ID and expiry are diagnostic values, not client input.
+The expected address is `127.0.0.1:25570`. Leave the process running and keep
+the two ticket lines visible. Do not publish them. The session ID and expiry are
+diagnostic values, not client input.
 
-## 3. Start the owner
+## 2. Start the owner
 
-In terminal 3:
+In terminal 2:
 
 ```powershell
 Set-Location mod
@@ -76,9 +64,9 @@ $env:KT_M1_TICKET = Read-Host 'Paste KT_M1_OWNER_TICKET'
 Open any single-player world. The mod publishes the IntegratedServer locally
 and logs that the owner tunnel is waiting for its paired guest.
 
-## 4. Start and connect the guest
+## 3. Start and connect the guest
 
-In terminal 4:
+In terminal 3:
 
 ```powershell
 Set-Location mod
