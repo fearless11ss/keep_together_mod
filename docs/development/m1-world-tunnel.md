@@ -50,32 +50,26 @@ diagnostic values, not client input.
 
 ## 2. Start the owner
 
-In terminal 2:
+In terminal 2, run the launcher from any current directory:
 
 ```powershell
-Set-Location mod
-$env:KT_M1_MODE = 'owner'
-$env:KT_M1_RELAY_HOST = '127.0.0.1'
-$env:KT_M1_RELAY_PORT = '25570'
-$env:KT_M1_TICKET = Read-Host 'Paste KT_M1_OWNER_TICKET'
-.\gradlew.bat runOwnerClient --console=plain
+& 'C:\dev\keep-together\scripts\start-m1-client.ps1' -Role owner
 ```
+
+At the masked prompt, paste only the value after `KT_M1_OWNER_TICKET=`.
 
 Open any single-player world. The mod publishes the IntegratedServer locally
 and logs that the owner tunnel is waiting for its paired guest.
 
 ## 3. Start and connect the guest
 
-In terminal 3:
+In terminal 3, run the launcher from any current directory:
 
 ```powershell
-Set-Location mod
-$env:KT_M1_MODE = 'guest'
-$env:KT_M1_RELAY_HOST = '127.0.0.1'
-$env:KT_M1_RELAY_PORT = '25570'
-$env:KT_M1_TICKET = Read-Host 'Paste KT_M1_GUEST_TICKET'
-.\gradlew.bat runGuestClient --console=plain
+& 'C:\dev\keep-together\scripts\start-m1-client.ps1' -Role guest
 ```
+
+At the masked prompt, paste only the value after `KT_M1_GUEST_TICKET=`.
 
 Find this guest log line and copy its actual port:
 
