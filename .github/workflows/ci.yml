@@ -19,7 +19,7 @@ jobs:
           java-version: '25'
       - uses: gradle/actions/setup-gradle@v4
       - run: ./gradlew clean test cyclonedxBom --console=plain
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: server-sbom
           path: '**/build/reports/cyclonedx*/bom.*'
@@ -38,7 +38,7 @@ jobs:
           java-version: '17'
       - uses: gradle/actions/setup-gradle@v4
       - run: ./gradlew clean build cyclonedxBom --console=plain
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: forge-sbom
           path: mod/build/reports/cyclonedx*/bom.*
@@ -60,7 +60,7 @@ jobs:
       - run: pnpm run test
       - run: pnpm run build
       - run: npx --yes @cyclonedx/cdxgen@12.9.0 --type js --output build/reports/web.cdx.json
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: website-sbom
           path: web/build/reports/web.cdx.json
